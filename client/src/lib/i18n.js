@@ -1,0 +1,67 @@
+export const dictionaries = {
+  en: {
+    language: "Language",
+    promo: "Free express shipping over $100 · Use WELCOME10 for clothing savings",
+    shop: "Shop",
+    allProducts: "All clothing",
+    bestSellers: "Best sellers",
+    deals: "Deals",
+    flashDeals: "Flash deals",
+    cart: "Cart",
+    wishlist: "Saved styles",
+    profile: "Profile",
+    checkout: "Checkout",
+    admin: "Admin",
+    searchProducts: "Search clothing, brands, categories",
+    searchShort: "Search clothing",
+    toggleTheme: "Toggle theme",
+    logout: "Logout",
+    signIn: "Sign in",
+    footerDescription:
+      "A premium clothing commerce foundation with secure checkout flow, admin operations, and fashion-ready product discovery.",
+    support: "Support",
+    orderTracking: "Order tracking",
+    account: "Account",
+    launchNewsletter: "Launch newsletter",
+    newsletterCopy: "Private clothing drops, limited offers, and new season edits.",
+    newsletterPlaceholder: "Subscribe for clothing drops",
+    subscribe: "Subscribe",
+    copyright: "© 2026 Marketlane. Premium clothing commerce, ready to scale.",
+    fastShipping: "Fast shipping",
+    secureCheckout: "Secure checkout"
+  },
+  ar: {
+    language: "اللغة",
+    promo: "شحن سريع مجاني للطلبات فوق 100 دولار · استخدم WELCOME10 لتوفير الملابس",
+    shop: "المتجر",
+    allProducts: "كل الملابس",
+    bestSellers: "الأكثر مبيعا",
+    deals: "العروض",
+    flashDeals: "عروض سريعة",
+    cart: "السلة",
+    wishlist: "التنسيقات المحفوظة",
+    profile: "الملف الشخصي",
+    checkout: "الدفع",
+    admin: "لوحة التحكم",
+    searchProducts: "ابحث عن الملابس أو العلامات أو الأقسام",
+    searchShort: "ابحث عن الملابس",
+    toggleTheme: "تبديل المظهر",
+    logout: "تسجيل الخروج",
+    signIn: "تسجيل الدخول",
+    footerDescription: "منصة ملابس إلكترونية احترافية مع دفع آمن، إدارة متقدمة، وتجربة تسوق جاهزة للنمو.",
+    support: "الدعم",
+    orderTracking: "تتبع الطلبات",
+    account: "الحساب",
+    launchNewsletter: "النشرة البريدية",
+    newsletterCopy: "إصدارات ملابس خاصة، تخفيضات محدودة، وتحديثات الموسم.",
+    newsletterPlaceholder: "اشترك للحصول على أحدث تشكيلات الملابس",
+    subscribe: "اشترك",
+    copyright: "© 2026 ماركت لين. متجر ملابس احترافي وجاهز للتوسع.",
+    fastShipping: "شحن سريع",
+    secureCheckout: "دفع آمن"
+  }
+};
+
+export const t = (language, key) => dictionaries[language]?.[key] || dictionaries.en[key] || key;
+
+export const isRtl = (language) => language === "ar";
