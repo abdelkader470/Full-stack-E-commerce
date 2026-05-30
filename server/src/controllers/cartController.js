@@ -15,7 +15,7 @@ export const getCart = asyncHandler(async (req, res) => {
 export const addCartItem = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.body.productId);
   if (!product) {
-    const error = new Error("Product not found");
+    const error = new Error("Clothing item not found");
     error.statusCode = 404;
     throw error;
   }
@@ -52,7 +52,7 @@ export const updateCartItem = asyncHandler(async (req, res) => {
   const cart = await getUserCart(req.user._id);
   const item = cart.items.find((cartItem) => cartItem.product._id.toString() === req.params.productId);
   if (!item) {
-    const error = new Error("Cart item not found");
+    const error = new Error("Clothing bag item not found");
     error.statusCode = 404;
     throw error;
   }

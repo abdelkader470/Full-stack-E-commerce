@@ -49,7 +49,7 @@ export const getProduct = asyncHandler(async (req, res) => {
   const product = await Product.findOne(lookup).populate("category", "name slug");
 
   if (!product) {
-    const error = new Error("Product not found");
+    const error = new Error("Clothing item not found");
     error.statusCode = 404;
     throw error;
   }
@@ -74,7 +74,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     runValidators: true
   });
   if (!product) {
-    const error = new Error("Product not found");
+    const error = new Error("Clothing item not found");
     error.statusCode = 404;
     throw error;
   }
@@ -84,24 +84,24 @@ export const updateProduct = asyncHandler(async (req, res) => {
 export const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findByIdAndUpdate(req.params.id, { status: "archived" }, { new: true });
   if (!product) {
-    const error = new Error("Product not found");
+    const error = new Error("Clothing item not found");
     error.statusCode = 404;
     throw error;
   }
-  res.json({ message: "Product archived" });
+  res.json({ message: "Clothing item archived" });
 });
 
 export const addReview = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
-    const error = new Error("Product not found");
+    const error = new Error("Clothing item not found");
     error.statusCode = 404;
     throw error;
   }
 
   const alreadyReviewed = product.reviews.some((review) => review.user.toString() === req.user._id.toString());
   if (alreadyReviewed) {
-    const error = new Error("You already reviewed this product");
+    const error = new Error("You already reviewed this clothing item");
     error.statusCode = 409;
     throw error;
   }
