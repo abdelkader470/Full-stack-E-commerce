@@ -38,14 +38,14 @@ export function Auth({ mode = "login" }) {
       <Helmet>
         <title>{isRegister ? "Create Account" : "Login"} | Marketlane</title>
       </Helmet>
-      <div className="relative overflow-hidden rounded-lg bg-ink p-8 text-white">
+      <div className="relative overflow-hidden rounded-lg bg-black p-8 text-white">
         <img
           src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1000&q=80"
           alt="Clothing store account"
           className="absolute inset-0 h-full w-full object-cover opacity-35"
         />
         <div className="relative">
-          <ShieldCheck className="h-10 w-10 text-brand-100" />
+          <ShieldCheck className="h-10 w-10 text-white" />
           <h1 className="mt-6 text-4xl font-extrabold">Secure clothing store access</h1>
           <p className="mt-4 text-slate-200">
             Customer profiles, clothing order history, saved addresses, saved styles, and admin role control use JWT-backed access.
@@ -97,7 +97,7 @@ export function Auth({ mode = "login" }) {
         </Button>
         <p className="mt-5 text-center text-sm text-slate-500">
           {isRegister ? "Already have an account?" : "New here?"}{" "}
-          <Link className="font-bold text-brand-600" to={isRegister ? "/login" : "/register"}>
+          <Link className="font-bold text-black underline underline-offset-4 dark:text-white" to={isRegister ? "/login" : "/register"}>
             {isRegister ? "Sign in" : "Create one"}
           </Link>
         </p>

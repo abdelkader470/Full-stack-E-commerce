@@ -29,18 +29,26 @@ const sectionMotion = {
   transition: { duration: 0.45 }
 };
 
-function ProductRail({ title, eyebrow, body, products, loading, emptyTitle, action }) {
+function ProductRail({ title, eyebrow, body, products, loading, emptyTitle, action, carousel = false }) {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+    <section className="fashion-section">
       <SectionHeader eyebrow={eyebrow} title={title} body={body} action={action} />
       {loading ? (
         <ProductSkeletonGrid />
       ) : products.length === 0 ? (
         <EmptyState title={emptyTitle || "No clothing available"} body="Clothing will appear here once the catalog has data." />
-      ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      ) : carousel ? (
+        <div className="-mx-4 flex snap-x gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <div key={product._id} className="w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[27rem]">
+              <ProductCard product={product} editorial />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} editorial />
           ))}
         </div>
       )}
@@ -78,26 +86,26 @@ export function Home() {
         />
       </Helmet>
 
-      <section className="relative min-h-[86vh] overflow-hidden bg-ink text-white">
+      <section className="relative min-h-screen overflow-hidden bg-noir text-white">
         <img
           src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=80"
           alt="Premium clothing editorial display"
-          className="absolute inset-0 h-full w-full object-cover opacity-45"
+          className="absolute inset-0 h-full w-full object-cover opacity-70"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/82 to-brand-900/30" />
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-mist to-transparent dark:from-slate-950" />
-        <div className="relative mx-auto grid min-h-[86vh] max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/12 px-4 py-2 text-sm font-bold backdrop-blur">
-              <Sparkles className="h-4 w-4 text-saffron" /> Summer wardrobe edit: save up to 30% on premium apparel
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/48 to-black/12" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-mist to-transparent dark:from-[#080808]" />
+        <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}>
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
+              <Sparkles className="h-4 w-4 text-white" /> Summer wardrobe edit: save up to 30% on premium apparel
             </p>
-            <h1 className="max-w-4xl text-5xl font-extrabold leading-tight sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-6xl font-extrabold leading-[0.95] sm:text-7xl lg:text-8xl">
               Elevated clothing for wardrobes worth building.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/82">
               Curated apparel departments, limited-time outfit deals, best-selling styles, secure checkout, and a polished fashion shopping experience from first tap to final delivery.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap gap-3">
               <Link to="/products">
                 <Button variant="accent" className="px-5 py-3">
                   Shop clothing <ArrowRight className="h-4 w-4" />
@@ -109,24 +117,24 @@ export function Home() {
                 </Button>
               </Link>
             </div>
-            {error && <p className="mt-5 text-sm text-brand-100">{error}</p>}
+            {error && <p className="mt-5 text-sm text-white/75">{error}</p>}
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
+            transition={{ duration: 0.7, delay: 0.14, ease: "easeOut" }}
             className="relative hidden lg:block"
           >
-            <div className="rounded-lg border border-white/15 bg-white/12 p-5 shadow-glow backdrop-blur">
-              <div className="overflow-hidden rounded-lg bg-white text-ink">
+            <div className="luxury-glass rounded-lg p-5">
+              <div className="overflow-hidden rounded-lg bg-white text-black">
                 <img
-                  src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=900&q=80"
+                  src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=80"
                   alt="Curated clothing"
-                  className="h-72 w-full object-cover"
+                  className="h-[30rem] w-full object-cover"
                 />
-                <div className="p-5">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-coral">Promo banner</p>
+                <div className="p-6">
+                  <p className="text-xs font-extrabold uppercase text-black">Editorial drop</p>
                   <h2 className="mt-2 text-2xl font-extrabold">Weekend wardrobe pass</h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
                     Use WELCOME10 at checkout for member pricing on curated clothing.
@@ -138,8 +146,8 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto -mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-glow dark:border-slate-800 dark:bg-slate-900 md:grid-cols-4">
+      <section className="mx-auto -mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-3 rounded-lg border border-white/60 bg-white/80 p-4 shadow-editorial backdrop-blur-xl dark:border-white/10 dark:bg-white/5 md:grid-cols-4">
           {[
             ["Free shipping", "On orders above $100", Truck],
             ["Secure payment", "Protected checkout flow", ShieldCheck],
@@ -147,7 +155,7 @@ export function Home() {
             ["Priority support", "Human help when needed", Sparkles]
           ].map(([label, body, Icon]) => (
             <div key={label} className="flex items-center gap-4 p-3">
-              <span className="rounded-lg bg-brand-50 p-3 text-brand-700 dark:bg-brand-600/15 dark:text-brand-100">
+              <span className="rounded-lg bg-neutral-100 p-3 text-black dark:bg-white/10 dark:text-white">
                 <Icon className="h-5 w-5" />
               </span>
               <div>
@@ -159,14 +167,14 @@ export function Home() {
         </div>
       </section>
 
-      <motion.section {...sectionMotion} className="bg-white py-16 dark:bg-slate-950">
+      <motion.section {...sectionMotion} className="bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Featured categories"
             title="Shop by clothing department"
             body="Apparel departments with visual discovery, quick filtering, and style paths that stay fast on every device."
             action={
-              <Link className="inline-flex items-center gap-2 font-extrabold text-brand-700 dark:text-brand-100" to="/products">
+              <Link className="inline-flex items-center gap-2 font-extrabold text-black dark:text-white" to="/products">
                 View all <ArrowRight className="h-4 w-4" />
               </Link>
             }
@@ -182,6 +190,7 @@ export function Home() {
         products={featured}
         loading={loading}
         emptyTitle="No featured clothing yet"
+        carousel
       />
 
       <ProductRail
@@ -193,7 +202,7 @@ export function Home() {
         emptyTitle="No best sellers yet"
       />
 
-      <section className="bg-white py-16 dark:bg-slate-950">
+      <section className="bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Flash deals"
@@ -213,7 +222,7 @@ export function Home() {
         emptyTitle="No new arrivals yet"
       />
 
-      <section className="bg-white py-16 dark:bg-slate-950">
+      <section className="bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Featured brands"
@@ -224,7 +233,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="fashion-section">
         <SectionHeader
           eyebrow="Why choose us"
           title="Built for premium clothing shopping from browse to delivery"
@@ -242,7 +251,7 @@ export function Home() {
         emptyTitle="No trending styles yet"
       />
 
-      <section className="bg-ink py-16 text-white">
+      <section className="bg-noir py-20 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Customer reviews"
@@ -254,7 +263,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="fashion-section">
         <SectionHeader
           eyebrow="Recently viewed"
           title="Pick up where you left off"
@@ -271,17 +280,17 @@ export function Home() {
         )}
       </section>
 
-      <section className="bg-white py-16 dark:bg-slate-950">
+      <section className="bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <NewsletterPanel />
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="fashion-section">
         <AppPromo />
       </section>
 
-      <section className="bg-white py-16 dark:bg-slate-950">
+      <section className="bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Social showcase"
@@ -292,7 +301,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
         <SectionHeader
           eyebrow="FAQ preview"
           title="Answers before checkout"

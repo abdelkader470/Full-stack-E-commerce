@@ -85,7 +85,7 @@ export function Checkout() {
         </div>
         <div className="mt-8 rounded-lg border border-slate-200 p-4 dark:border-slate-700">
           <div className="flex items-center gap-3">
-            <CreditCard className="h-5 w-5 text-brand-600" />
+            <CreditCard className="h-5 w-5 text-black dark:text-white" />
             <h2 className="font-bold">Payment structure</h2>
           </div>
           <p className="mt-2 text-sm text-slate-500">

@@ -53,7 +53,7 @@ const smallInputClass =
   "focus-ring w-24 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm font-semibold shadow-inner dark:border-slate-700 dark:bg-slate-950";
 const panelClass =
   "rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900";
-const labelClass = "mb-1 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500";
+const labelClass = "mb-1 block text-xs font-extrabold uppercase text-slate-500";
 
 function Field({ label, children }) {
   return (
@@ -111,9 +111,9 @@ export function AdminDashboard() {
 
   const stats = useMemo(
     () => [
-      { label: "Revenue", value: money(analytics?.revenue || 0), icon: BarChart3, tone: "text-brand-600" },
-      { label: "Orders", value: analytics?.orders || 0, icon: ShoppingCart, tone: "text-coral" },
-      { label: "Customers", value: analytics?.customers || 0, icon: UsersRound, tone: "text-saffron" },
+      { label: "Revenue", value: money(analytics?.revenue || 0), icon: BarChart3, tone: "text-black dark:text-white" },
+      { label: "Orders", value: analytics?.orders || 0, icon: ShoppingCart, tone: "text-neutral-700 dark:text-neutral-200" },
+      { label: "Customers", value: analytics?.customers || 0, icon: UsersRound, tone: "text-neutral-500 dark:text-neutral-400" },
       { label: "Low stock", value: analytics?.lowStock?.length || 0, icon: Boxes, tone: "text-red-500" }
     ],
     [analytics]
@@ -267,7 +267,7 @@ export function AdminDashboard() {
           <h2 className="text-xl font-extrabold">Add clothing</h2>
           <p className="mt-1 text-sm text-slate-500">Create clothing items with pricing, stock, image and merchandising flags.</p>
         </div>
-        <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-extrabold text-brand-700 dark:bg-brand-600/15 dark:text-brand-100">
+        <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-extrabold text-black dark:bg-white/10 dark:text-white">
           Catalog
         </span>
       </div>
@@ -346,7 +346,7 @@ export function AdminDashboard() {
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {products.map((product) => (
-              <tr key={product._id} className="transition hover:bg-brand-50/40 dark:hover:bg-slate-950">
+              <tr key={product._id} className="transition hover:bg-neutral-50 dark:hover:bg-slate-950">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <img
@@ -608,8 +608,8 @@ export function AdminDashboard() {
       <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-            <div className="bg-ink p-5 text-white">
-              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-brand-100">Admin</p>
+            <div className="bg-black p-5 text-white">
+              <p className="text-xs font-extrabold uppercase text-white/70">Admin</p>
               <h1 className="mt-2 text-2xl font-extrabold">Marketlane</h1>
               <p className="mt-2 text-sm text-slate-300">Control clothing, orders, pricing and customers.</p>
             </div>
@@ -623,7 +623,7 @@ export function AdminDashboard() {
                     onClick={() => setActiveSection(id)}
                     className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-sm font-extrabold transition ${
                       active
-                        ? "bg-brand-50 text-brand-700 dark:bg-brand-600/15 dark:text-brand-100"
+                        ? "bg-black text-white dark:bg-white dark:text-black"
                         : "text-slate-600 hover:bg-mist dark:text-slate-300 dark:hover:bg-slate-950"
                     }`}
                   >
@@ -652,7 +652,7 @@ export function AdminDashboard() {
           <div className="mb-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-brand-600">Workspace</p>
+                <p className="text-xs font-extrabold uppercase text-neutral-500 dark:text-neutral-400">Workspace</p>
                 <h2 className="mt-1 text-3xl font-extrabold">{activeLabel}</h2>
               </div>
               <span className="inline-flex items-center gap-2 rounded-full bg-mist px-3 py-1 text-sm font-bold text-slate-600 dark:bg-slate-950 dark:text-slate-300">
@@ -661,7 +661,7 @@ export function AdminDashboard() {
             </div>
             {error && <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
             {success && (
-              <p className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand-50 p-3 text-sm font-semibold text-brand-700">
+              <p className="mt-4 inline-flex items-center gap-2 rounded-lg bg-neutral-100 p-3 text-sm font-semibold text-black dark:bg-white/10 dark:text-white">
                 <CheckCircle2 className="h-4 w-4" /> {success}
               </p>
             )}

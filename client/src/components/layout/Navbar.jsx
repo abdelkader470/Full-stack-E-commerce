@@ -8,7 +8,7 @@ import { useUiStore } from "../../store/useUiStore";
 import { Button } from "../ui/Button";
 
 const navLink = ({ isActive }) =>
-  `text-sm font-semibold transition ${isActive ? "text-brand-600" : "text-slate-600 hover:text-ink dark:text-slate-300 dark:hover:text-white"}`;
+  `text-sm font-semibold transition ${isActive ? "text-black dark:text-white" : "text-neutral-600 hover:text-black dark:text-neutral-300 dark:hover:text-white"}`;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -31,19 +31,19 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/92 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/92">
-      <div className="bg-ink text-white">
+      <div className="bg-black text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-2 text-center text-xs font-bold sm:px-6 lg:px-8">
-          <Sparkles className="h-3.5 w-3.5 text-saffron" />
+          <Sparkles className="h-3.5 w-3.5 text-white" />
           {t(language, "promo")}
         </div>
       </div>
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2 text-xl font-extrabold tracking-normal">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-ink text-sm text-white shadow-sm dark:bg-white dark:text-ink">
+        <Link to="/" className="flex items-center gap-2 text-xl font-extrabold">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-black text-sm text-white shadow-sm dark:bg-white dark:text-black">
             ML
           </span>
           <span>
-            Market<span className="text-brand-600">lane</span>
+            Market<span className="text-black dark:text-white">lane</span>
           </span>
         </Link>
         <nav className="hidden items-center gap-6 lg:flex">
@@ -90,12 +90,12 @@ export function Navbar() {
         </Button>
         <Link to="/wishlist" className="relative rounded-lg p-2.5 transition hover:bg-slate-100 dark:hover:bg-slate-800" aria-label={t(language, "wishlist")}>
           <Heart className="h-5 w-5" />
-          {wishlist.length > 0 && <span className="absolute end-0 top-0 h-2.5 w-2.5 rounded-full bg-coral" />}
+          {wishlist.length > 0 && <span className="absolute end-0 top-0 h-2.5 w-2.5 rounded-full bg-black dark:bg-white" />}
         </Link>
         <Link to="/cart" className="relative rounded-lg p-2.5 transition hover:bg-slate-100 dark:hover:bg-slate-800" aria-label={t(language, "cart")}>
           <ShoppingBag className="h-5 w-5" />
           {cart.length > 0 && (
-            <span className="absolute -end-1 -top-1 rounded-full bg-brand-600 px-1.5 text-xs font-bold text-white">
+            <span className="absolute -end-1 -top-1 rounded-full bg-black px-1.5 text-xs font-bold text-white dark:bg-white dark:text-black">
               {cart.length}
             </span>
           )}

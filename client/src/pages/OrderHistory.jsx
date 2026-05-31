@@ -52,7 +52,7 @@ export function OrderHistory() {
                 <p className="text-sm text-slate-500">
                   {new Date(order.createdAt).toLocaleDateString()} - {order.orderStatus} - {order.paymentStatus} - {money(order.totalPrice)}
                 </p>
-                {order.trackingNumber && <p className="mt-1 text-sm text-brand-600">Tracking: {order.trackingNumber}</p>}
+                {order.trackingNumber && <p className="mt-1 text-sm text-black dark:text-white">Tracking: {order.trackingNumber}</p>}
               </div>
               <div className="flex gap-2">
                 <Button variant="outline"><Truck className="h-4 w-4" /> {order.orderStatus}</Button>

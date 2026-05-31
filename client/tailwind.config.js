@@ -8,21 +8,24 @@ export default {
       },
       colors: {
         ink: "#101828",
-        mist: "#f6f8fb",
+        mist: "#f7f7f7",
+        bone: "#f7f7f7",
+        noir: "#111111",
         brand: {
-          50: "#effcf8",
-          100: "#d8f6ef",
-          200: "#aeeadc",
-          500: "#16a37b",
-          600: "#0d8768",
-          700: "#096b55",
-          900: "#063f35"
+          50: "#f7f7f7",
+          100: "#eeeeee",
+          200: "#d7d7d7",
+          500: "#6b6b6b",
+          600: "#111111",
+          700: "#000000",
+          900: "#050505"
         },
-        coral: "#f26b5b",
-        saffron: "#f5b841"
+        coral: "#d32f2f",
+        saffron: "#111111"
       },
       boxShadow: {
-        glow: "0 24px 80px rgba(16, 24, 40, 0.12)"
+        glow: "0 30px 90px rgba(17, 17, 17, 0.14)",
+        editorial: "0 18px 60px rgba(17, 17, 17, 0.18)"
       }
     }
   },

@@ -74,17 +74,17 @@ export function Products() {
     "";
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <Helmet>
         <title>Shop Clothing | Marketlane</title>
       </Helmet>
-      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-sm font-bold uppercase tracking-normal text-brand-600">Clothing store</p>
-          <h1 className="text-4xl font-extrabold">Clothing catalog</h1>
+          <p className="text-sm font-bold uppercase text-neutral-500 dark:text-neutral-400">Clothing store</p>
+          <h1 className="text-5xl font-extrabold leading-tight">Clothing catalog</h1>
           {error && <p className="mt-2 text-sm text-slate-500">{error}</p>}
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 rounded-lg border border-slate-200 bg-white/80 p-3 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/80">
           <label className="relative">
             <input
               value={filters.search}
@@ -139,14 +139,37 @@ export function Products() {
           </span>
         </div>
       </div>
+      <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
+        <button
+          type="button"
+          onClick={() => setFilters((prev) => ({ ...prev, category: "" }))}
+          className={`shrink-0 rounded-full border px-5 py-2 text-sm font-bold transition ${
+            !filters.category ? "border-noir bg-noir text-white dark:border-white dark:bg-white dark:text-noir" : "border-slate-200 bg-white text-slate-600 hover:border-noir dark:border-slate-800 dark:bg-slate-900"
+          }`}
+        >
+          All clothing
+        </button>
+        {categories.map((category) => (
+          <button
+            type="button"
+            key={category._id}
+            onClick={() => setFilters((prev) => ({ ...prev, category: category._id }))}
+            className={`shrink-0 rounded-full border px-5 py-2 text-sm font-bold transition ${
+              filters.category === category._id ? "border-noir bg-noir text-white dark:border-white dark:bg-white dark:text-noir" : "border-slate-200 bg-white text-slate-600 hover:border-noir dark:border-slate-800 dark:bg-slate-900"
+            }`}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
       {loading ? (
         <LoadingState label="Loading clothing" />
       ) : filtered.length === 0 ? (
         <EmptyState title="No clothing found" body="Try another search, category, or collection filter." />
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <ProductCard key={product._id} product={product} editorial />
           ))}
         </div>
       )}

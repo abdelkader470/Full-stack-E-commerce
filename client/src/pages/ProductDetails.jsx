@@ -47,13 +47,13 @@ export function ProductDetails() {
           <img src={product.images?.[0]?.url} alt={product.name} className="aspect-square w-full object-cover" />
         </div>
         <div className="self-center">
-          <p className="text-sm font-bold uppercase tracking-normal text-brand-600">{product.brand}</p>
+          <p className="text-sm font-bold uppercase text-neutral-500 dark:text-neutral-400">{product.brand}</p>
           <h1 className="mt-2 text-4xl font-extrabold">{product.name}</h1>
           <div className="mt-4 flex flex-wrap items-center gap-4">
             <span className="text-3xl font-extrabold">{money(selectedVariant?.price || product.price)}</span>
             {product.compareAtPrice && <span className="text-lg text-slate-400 line-through">{money(product.compareAtPrice)}</span>}
-            <span className="inline-flex items-center gap-1 rounded-full bg-saffron/20 px-3 py-1 text-sm font-bold text-ink dark:text-saffron">
-              <Star className="h-4 w-4 fill-saffron text-saffron" /> {product.rating} ({product.numReviews})
+            <span className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-3 py-1 text-sm font-bold text-black dark:bg-neutral-900 dark:text-white">
+              <Star className="h-4 w-4 fill-black text-black dark:fill-white dark:text-white" /> {product.rating} ({product.numReviews})
             </span>
           </div>
           <p className="mt-5 text-slate-600 dark:text-slate-300">{product.description}</p>
@@ -67,7 +67,7 @@ export function ProductDetails() {
                     onClick={() => setSelectedVariant(variant)}
                     className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
                       selectedVariant?._id === variant._id
-                        ? "border-brand-600 bg-brand-50 text-brand-700 dark:bg-brand-600/15 dark:text-brand-50"
+                        ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
                         : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"
                     }`}
                   >
@@ -82,7 +82,7 @@ export function ProductDetails() {
               <ShoppingBag className="h-4 w-4" /> Add to bag
             </Button>
             <Button variant="outline" onClick={() => toggleWishlist(product)}>
-              <Heart className={`h-4 w-4 ${liked ? "fill-coral text-coral" : ""}`} /> Save style
+              <Heart className={`h-4 w-4 ${liked ? "fill-black text-black dark:fill-white dark:text-white" : ""}`} /> Save style
             </Button>
           </div>
           <div className="mt-8 grid gap-3 rounded-lg border border-slate-200 bg-white p-4 text-sm dark:border-slate-800 dark:bg-slate-900 sm:grid-cols-3">

@@ -11,16 +11,16 @@ export function Profile() {
       <h1 className="text-4xl font-extrabold">Profile</h1>
       <div className="mt-8 grid gap-6 md:grid-cols-[320px_1fr]">
         <aside className="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-900">
-          <UserRound className="h-10 w-10 text-brand-600" />
+          <UserRound className="h-10 w-10 text-black dark:text-white" />
           <h2 className="mt-4 text-xl font-extrabold">{user?.name}</h2>
           <p className="text-sm text-slate-500">{user?.email}</p>
-          <p className="mt-2 inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-bold uppercase text-brand-700 dark:bg-brand-600/15 dark:text-brand-50">
+          <p className="mt-2 inline-flex rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold uppercase text-black dark:bg-white/10 dark:text-white">
             {user?.role}
           </p>
         </aside>
         <div className="grid gap-5 md:grid-cols-2">
           <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-900">
-            <MapPin className="h-6 w-6 text-coral" />
+            <MapPin className="h-6 w-6 text-black dark:text-white" />
             <h2 className="mt-3 text-xl font-extrabold">Shipping addresses</h2>
             <p className="mt-2 text-sm text-slate-500">Manage delivery addresses through the profile API structure.</p>
             <div className="mt-4 space-y-3 text-sm">
@@ -32,7 +32,7 @@ export function Profile() {
             </div>
           </div>
           <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-900">
-            <Shirt className="h-6 w-6 text-brand-600" />
+            <Shirt className="h-6 w-6 text-black dark:text-white" />
             <h2 className="mt-3 text-xl font-extrabold">Clothing orders</h2>
             <p className="mt-2 text-sm text-slate-500">Track clothing order status, payment state, invoices, and shipment details.</p>
             <Link className="mt-5 inline-block" to="/orders">

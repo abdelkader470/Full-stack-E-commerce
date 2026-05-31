@@ -1,10 +1,10 @@
 export function Button({ children, className = "", variant = "primary", ...props }) {
   const variants = {
-    primary: "bg-ink text-white hover:bg-slate-800 dark:bg-white dark:text-ink dark:hover:bg-slate-100",
-    accent: "bg-brand-600 text-white hover:bg-brand-700",
+    primary: "bg-black text-white hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-100",
+    accent: "bg-black text-white hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-100",
     outline:
-      "border border-slate-200 bg-white text-ink hover:border-brand-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white",
-    ghost: "text-ink hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800"
+      "border border-neutral-300 bg-white text-black hover:border-black hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-950 dark:text-white dark:hover:border-white",
+    ghost: "text-black hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-900"
   };
 
   return (
