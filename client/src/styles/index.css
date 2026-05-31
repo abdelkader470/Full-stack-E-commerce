@@ -88,3 +88,76 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+@media print {
+  @page {
+    margin: 8mm;
+    size: A4;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .invoice-sheet,
+  .invoice-sheet * {
+    visibility: visible;
+  }
+
+  .invoice-sheet {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    left: 0;
+    position: absolute;
+    transform: scale(0.82);
+    transform-origin: top left;
+    top: 0;
+    width: 121%;
+  }
+
+  .invoice-sheet header,
+  .invoice-sheet section {
+    padding: 12px 18px !important;
+  }
+
+  .invoice-sheet h2 {
+    font-size: 26px !important;
+    line-height: 1.1 !important;
+  }
+
+  .invoice-sheet h3,
+  .invoice-sheet p,
+  .invoice-sheet address,
+  .invoice-sheet table,
+  .invoice-sheet dl {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .invoice-sheet table {
+    min-width: 0 !important;
+  }
+
+  .invoice-sheet th,
+  .invoice-sheet td {
+    padding-bottom: 6px !important;
+    padding-top: 6px !important;
+  }
+
+  .invoice-sheet img {
+    display: none !important;
+  }
+
+  .invoice-sheet .mt-8 {
+    margin-top: 14px !important;
+  }
+
+  .invoice-sheet .space-y-3 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 6px !important;
+  }
+}
