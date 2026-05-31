@@ -70,6 +70,23 @@ Frontend: `http://localhost:5173`
 
 Backend health check: `http://localhost:5000/health`
 
+## Email Setup
+
+Order confirmation and admin order-status emails are sent only when an email provider is configured.
+For SMTP, add real values in `server/.env`, then restart the backend:
+
+```env
+EMAIL_FROM="Marketlane Clothing <your-email@gmail.com>"
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-gmail-app-password
+```
+
+You can also keep using the API-provider mode with `EMAIL_PROVIDER_URL` and `EMAIL_PROVIDER_API_KEY`.
+If neither provider is configured, the server logs `[email skipped]` and no email is sent.
+
 ## API Overview
 
 - `POST /api/auth/register`
