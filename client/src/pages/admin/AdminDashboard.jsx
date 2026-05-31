@@ -13,10 +13,12 @@ import {
   UsersRound
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/Button";
 import { EmptyState, LoadingState } from "../../components/ui/State";
 import { api, money } from "../../lib/api";
 import { useShopStore } from "../../store/useShopStore";
+import { ReportsPage } from "./ReportsPage";
 
 const emptyProduct = {
   name: "",
@@ -64,7 +66,9 @@ function Field({ label, children }) {
   );
 }
 
-export function AdminDashboard() {
+export function AdminDashboard({ initialSection = "overview" }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { products, categories, fetchCatalog } = useShopStore();
   const [analytics, setAnalytics] = useState(null);
   const [orders, setOrders] = useState([]);
@@ -74,7 +78,7 @@ export function AdminDashboard() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [activeSection, setActiveSection] = useState("overview");
+  const [activeSection, setActiveSection] = useState(initialSection);
   const [productForm, setProductForm] = useState(emptyProduct);
   const [categoryForm, setCategoryForm] = useState(emptyCategory);
   const [couponForm, setCouponForm] = useState(emptyCoupon);
@@ -109,6 +113,10 @@ export function AdminDashboard() {
     loadAdminData();
   }, [loadAdminData]);
 
+  useEffect(() => {
+    setActiveSection(initialSection);
+  }, [initialSection]);
+
   const stats = useMemo(
     () => [
       { label: "Revenue", value: money(analytics?.revenue || 0), icon: BarChart3, tone: "text-black dark:text-white" },
@@ -121,6 +129,7 @@ export function AdminDashboard() {
 
   const navItems = [
     { id: "overview", label: "Overview", icon: LayoutDashboard, count: null },
+    { id: "reports", label: "Reports", icon: BarChart3, count: null },
     { id: "products", label: "Clothing", icon: PackagePlus, count: products.length },
     { id: "categories", label: "Categories", icon: Layers3, count: categories.length },
     { id: "coupons", label: "Coupons", icon: Percent, count: coupons.length },
@@ -595,6 +604,10 @@ export function AdminDashboard() {
       );
     }
 
+    if (activeSection === "reports") {
+      return <ReportsPage categories={categories} customers={users} products={products} />;
+    }
+
     if (activeSection === "categories") return renderCategoryPanel();
     if (activeSection === "coupons") return renderCouponPanel();
     if (activeSection === "orders") return renderOrdersPanel();
@@ -620,7 +633,14 @@ export function AdminDashboard() {
                   <button
                     key={id}
                     type="button"
-                    onClick={() => setActiveSection(id)}
+                    onClick={() => {
+                      setActiveSection(id);
+                      if (id === "reports") {
+                        navigate("/admin/reports");
+                      } else if (location.pathname !== "/admin") {
+                        navigate("/admin");
+                      }
+                    }}
                     className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-sm font-extrabold transition ${
                       active
                         ? "bg-black text-white dark:bg-white dark:text-black"

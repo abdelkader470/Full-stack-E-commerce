@@ -26,10 +26,19 @@ function AddressBlock({ address }) {
 function InvoiceModal({ invoice, onClose }) {
   if (!invoice) return null;
 
-  const printInvoice = () => window.print();
+  const printInvoice = () => {
+    document.body.classList.add("invoice-printing");
+    const cleanup = () => {
+      document.body.classList.remove("invoice-printing");
+      window.removeEventListener("afterprint", cleanup);
+    };
+    window.addEventListener("afterprint", cleanup);
+    window.print();
+    window.setTimeout(cleanup, 1000);
+  };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 px-4 py-6 backdrop-blur-sm">
+    <div className="invoice-print-layer fixed inset-0 z-50 overflow-y-auto bg-black/60 px-4 py-6 backdrop-blur-sm">
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 flex justify-end gap-2 print:hidden">
           <Button type="button" variant="outline" onClick={printInvoice}>

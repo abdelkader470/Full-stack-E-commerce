@@ -38,7 +38,10 @@ const router = createBrowserRouter(
         },
         {
           element: <ProtectedRoute role="admin" />,
-          children: [{ path: "admin", element: <AdminDashboard /> }]
+          children: [
+            { path: "admin", element: <AdminDashboard /> },
+            { path: "admin/reports", element: <AdminDashboard initialSection="reports" /> }
+          ]
         },
         { path: "*", element: <Navigate to="/" replace /> }
       ]

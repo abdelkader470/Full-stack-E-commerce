@@ -56,6 +56,8 @@ const productSchema = new mongoose.Schema(
 );
 
 productSchema.index({ name: "text", description: "text", brand: "text", tags: "text" });
+productSchema.index({ category: 1, status: 1, stock: 1 });
+productSchema.index({ status: 1, salesCount: -1, rating: -1 });
 
 productSchema.pre("validate", function setSlug(next) {
   if (this.name && !this.slug) {
