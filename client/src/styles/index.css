@@ -4,6 +4,7 @@
 
 :root {
   color-scheme: light;
+  scroll-behavior: smooth;
 }
 
 .dark {
@@ -17,6 +18,21 @@ body {
   color: #111111;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .dark body {
@@ -39,4 +55,36 @@ body {
 
 .fashion-section {
   @apply mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8;
+}
+
+.home-section {
+  scroll-margin-top: 96px;
+}
+
+.premium-scrollbar {
+  scrollbar-color: #111111 #e5e5e5;
+  scrollbar-width: thin;
+}
+
+.premium-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-track {
+  background: #e5e5e5;
+  border-radius: 999px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-thumb {
+  background: #111111;
+  border-radius: 999px;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

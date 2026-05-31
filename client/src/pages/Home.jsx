@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { ArrowRight, BadgePercent, ShieldCheck, Sparkles, Truck } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, ArrowLeft, ArrowRight, BadgePercent, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { useEffect, useMemo, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import {
@@ -23,22 +23,55 @@ import { EmptyState } from "../components/ui/State";
 import { useShopStore } from "../store/useShopStore";
 
 const sectionMotion = {
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 32 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.45 }
+  viewport: { once: true, margin: "-120px" },
+  transition: { duration: 0.7, ease: "easeOut" }
 };
 
 function ProductRail({ title, eyebrow, body, products, loading, emptyTitle, action, carousel = false }) {
+  const railRef = useRef(null);
+  const scrollRail = (direction) => {
+    if (!railRef.current) return;
+    railRef.current.scrollBy({
+      left: direction * railRef.current.clientWidth * 0.82,
+      behavior: "smooth"
+    });
+  };
+
+  const railAction = carousel && products.length > 0 ? (
+    <div className="flex items-center gap-2">
+      {action}
+      <button
+        type="button"
+        aria-label="Previous styles"
+        onClick={() => scrollRail(-1)}
+        className="grid h-11 w-11 place-items-center rounded-full border border-neutral-300 bg-white text-black shadow-sm transition hover:border-black hover:bg-black hover:text-white dark:border-neutral-700 dark:bg-neutral-950 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+      >
+        <ArrowLeft className="h-4 w-4" />
+      </button>
+      <button
+        type="button"
+        aria-label="Next styles"
+        onClick={() => scrollRail(1)}
+        className="grid h-11 w-11 place-items-center rounded-full border border-neutral-300 bg-white text-black shadow-sm transition hover:border-black hover:bg-black hover:text-white dark:border-neutral-700 dark:bg-neutral-950 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+      >
+        <ArrowRight className="h-4 w-4" />
+      </button>
+    </div>
+  ) : (
+    action
+  );
+
   return (
-    <section className="fashion-section">
-      <SectionHeader eyebrow={eyebrow} title={title} body={body} action={action} />
+    <motion.section {...sectionMotion} className="fashion-section home-section">
+      <SectionHeader eyebrow={eyebrow} title={title} body={body} action={railAction} />
       {loading ? (
         <ProductSkeletonGrid />
       ) : products.length === 0 ? (
         <EmptyState title={emptyTitle || "No clothing available"} body="Clothing will appear here once the catalog has data." />
       ) : carousel ? (
-        <div className="-mx-4 flex snap-x gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div ref={railRef} className="-mx-4 flex snap-x gap-5 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 hide-scrollbar">
           {products.map((product) => (
             <div key={product._id} className="w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[27rem]">
               <ProductCard product={product} editorial />
@@ -52,12 +85,15 @@ function ProductRail({ title, eyebrow, body, products, loading, emptyTitle, acti
           ))}
         </div>
       )}
-    </section>
+    </motion.section>
   );
 }
 
 export function Home() {
   const { products, categories, loading, error, recentlyViewed, fetchCatalog } = useShopStore();
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.22], [0, 120]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.22], [1, 1.08]);
 
   useEffect(() => {
     fetchCatalog();
@@ -86,11 +122,17 @@ export function Home() {
         />
       </Helmet>
 
+      <motion.div
+        className="fixed left-0 top-0 z-50 h-0.5 origin-left bg-black dark:bg-white"
+        style={{ scaleX: scrollYProgress }}
+      />
+
       <section className="relative min-h-screen overflow-hidden bg-noir text-white">
-        <img
+        <motion.img
           src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=80"
           alt="Premium clothing editorial display"
           className="absolute inset-0 h-full w-full object-cover opacity-70"
+          style={{ y: heroY, scale: heroScale }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/48 to-black/12" />
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-mist to-transparent dark:from-[#080808]" />
@@ -118,6 +160,9 @@ export function Home() {
               </Link>
             </div>
             {error && <p className="mt-5 text-sm text-white/75">{error}</p>}
+            <a href="#categories" className="mt-12 inline-flex items-center gap-2 text-sm font-bold text-white/80 transition hover:text-white">
+              Explore the edit <ArrowDown className="h-4 w-4" />
+            </a>
           </motion.div>
 
           <motion.div
@@ -146,7 +191,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto -mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
+      <motion.section {...sectionMotion} className="mx-auto -mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-3 rounded-lg border border-white/60 bg-white/80 p-4 shadow-editorial backdrop-blur-xl dark:border-white/10 dark:bg-white/5 md:grid-cols-4">
           {[
             ["Free shipping", "On orders above $100", Truck],
@@ -165,9 +210,9 @@ export function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <motion.section {...sectionMotion} className="bg-white py-20 dark:bg-[#080808]">
+      <motion.section id="categories" {...sectionMotion} className="home-section bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Featured categories"
@@ -202,7 +247,7 @@ export function Home() {
         emptyTitle="No best sellers yet"
       />
 
-      <section className="bg-white py-20 dark:bg-[#080808]">
+      <motion.section {...sectionMotion} className="home-section bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Flash deals"
@@ -211,7 +256,7 @@ export function Home() {
           />
           <FlashDeal product={flash} />
         </div>
-      </section>
+      </motion.section>
 
       <ProductRail
         eyebrow="New arrivals"
@@ -222,7 +267,7 @@ export function Home() {
         emptyTitle="No new arrivals yet"
       />
 
-      <section className="bg-white py-20 dark:bg-[#080808]">
+      <motion.section {...sectionMotion} className="home-section bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Featured brands"
@@ -231,16 +276,16 @@ export function Home() {
           />
           <BrandStrip />
         </div>
-      </section>
+      </motion.section>
 
-      <section className="fashion-section">
+      <motion.section {...sectionMotion} className="fashion-section home-section">
         <SectionHeader
           eyebrow="Why choose us"
           title="Built for premium clothing shopping from browse to delivery"
           body="The visual layer now matches the backend foundations: payments, order status, inventory, coupons, reviews, and customer accounts."
         />
         <BenefitGrid />
-      </section>
+      </motion.section>
 
       <ProductRail
         eyebrow="Trending now"
@@ -251,7 +296,7 @@ export function Home() {
         emptyTitle="No trending styles yet"
       />
 
-      <section className="bg-noir py-20 text-white">
+      <motion.section {...sectionMotion} className="home-section bg-noir py-20 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Customer reviews"
@@ -261,9 +306,9 @@ export function Home() {
           />
           <Testimonials />
         </div>
-      </section>
+      </motion.section>
 
-      <section className="fashion-section">
+      <motion.section {...sectionMotion} className="fashion-section home-section">
         <SectionHeader
           eyebrow="Recently viewed"
           title="Pick up where you left off"
@@ -278,19 +323,19 @@ export function Home() {
             ))}
           </div>
         )}
-      </section>
+      </motion.section>
 
-      <section className="bg-white py-20 dark:bg-[#080808]">
+      <motion.section {...sectionMotion} className="home-section bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <NewsletterPanel />
         </div>
-      </section>
+      </motion.section>
 
-      <section className="fashion-section">
+      <motion.section {...sectionMotion} className="fashion-section home-section">
         <AppPromo />
-      </section>
+      </motion.section>
 
-      <section className="bg-white py-20 dark:bg-[#080808]">
+      <motion.section {...sectionMotion} className="home-section bg-white py-20 dark:bg-[#080808]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Social showcase"
@@ -299,16 +344,16 @@ export function Home() {
           />
           <SocialShowcase />
         </div>
-      </section>
+      </motion.section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+      <motion.section {...sectionMotion} className="home-section mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
         <SectionHeader
           eyebrow="FAQ preview"
           title="Answers before checkout"
           body="Give shoppers confidence around shipping, returns, payments, tracking, and support without sending them away."
         />
         <FaqPreview />
-      </section>
+      </motion.section>
 
       <FinalCta />
     </>
